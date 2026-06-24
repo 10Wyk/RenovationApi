@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RDDU Renovation API</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui.css" />
+  <style>
+    body { margin: 0; padding: 0; }
+    .topbar { display: none; }
+  </style>
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-bundle.js"></script>
+  <script>
+    const spec = {
+      "openapi": "3.0.3",
+      "info": {
+        "title": "RDDU Renovation API",
+        "version": "1.0.0",
+        "description": "API для работы с объектами реновации"
+      },
+      "servers": [{ "url": "http://localhost:8080/RdduServer", "description": "Local server" }],
+      "security": [{ "basicAuth": [] }],
+      "paths": {
+        "/renovation/object/{id}": {
+          "get": {
+            "summary": "Получить объект реновации",
+            "description": "Возвращает полные данные объекта реновации по его порталовому идентификатору, включая строения, правообладателей и документы.",
+            "operationId": "getRenovationObject",
+            "tags": ["Renovation"],
+            "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "Уникальный идентификатор объекта реновации (portalId)",
+                "schema": { "type": "integer", "format": "int64" },
+                "example": 46
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Объект найден",
+                "content": {
+                  "application/json": {
+                    "schema": { "$ref": "#/components/schemas/RenovationContractResponse" },
+                    "example": {
+                      "id": 46,
+                      "number": "05-0008",
+                      "date": "27.03.2026",
+                      "ownersCount": 15,
+                      "auth": {
+                        "bin": "191240020942",
+                        "name": "ТОО \"Esil Park\"",
+                        "email": "example@outlook.com",
+                        "phone": "+7(747)550-01-68"
+                      },
+                      "objects": [
+                        {
+                          "id": 58,
+                          "objectCategory": 1,
+                          "cadastralNum": "11-111-111-1111",
+                          "katoCode": "711510000",
+                          "addressName": "г.Астана, район Нұра, улица 1, д. 1",
+                          "latitude": " 71.455078",
+                          "longitude": "51.179343",
+                          "yearBuilt": 1921,
+                          "floors": 1,
+                          "entranceCount": 1,
+                          "totalAreaM": 1.0,
+                          "apartmentNum": 1,
+                          "uninhabitedNum": 1,
+                          "ownersCount": 1,
+                          "landAreaHa": 0.0,
+                          "images": ["773cf9e7-d16f-473e-811b-c8175e94c957"],
+                          "owners": [null]
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "401": { "description": "Не авторизован — отсутствует или неверный заголовок Authorization" },
+              "404": { "description": "Объект с указанным id не найден" }
+            }
+          }
+        }
+      },
+      "components": {
+        "securitySchemes": {
+          "basicAuth": { "type": "http", "scheme": "basic" }
+        },
+        "schemas": {
+          "RenovationContractResponse": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer", "format": "int64", "example": 46 },
+              "number": { "type": "string", "example": "05-0008" },
+              "date": { "type": "string", "description": "Формат DD.MM.YYYY", "example": "27.03.2026" },
+              "ownersCount": { "type": "integer", "example": 15 },
+              "auth": { "$ref": "#/components/schemas/AuthInfo" },
+              "objects": { "type": "array", "items": { "$ref": "#/components/schemas/RenovationObject" } }
+            }
+          },
+          "AuthInfo": {
+            "type": "object",
+            "properties": {
+              "bin": { "type": "string", "example": "191240020942" },
+              "name": { "type": "string", "example": "ТОО \"Esil Park\"" },
+              "email": { "type": "string", "format": "email" },
+              "phone": { "type": "string", "example": "+7(747)550-01-68" }
+            }
+          },
+          "RenovationObject": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer", "format": "int64" },
+              "objectCategory": {
+                "type": "integer",
+                "description": "1 — Многоквартирный жилой дом\n2 — Многоквартирный жилой дом (малоэтажное строительство)\n3 — Индивидуальный жилой дом\n4 — Коммерческий объект\n5 — Иной объект",
+                "example": 1
+              },
+              "cadastralNum": { "type": "string", "example": "11-111-111-1111" },
+              "katoCode": { "type": "string", "example": "711510000" },
+              "addressName": { "type": "string" },
+              "latitude": { "type": "string", "description": "Может содержать ведущий пробел — применять trim()" },
+              "longitude": { "type": "string" },
+              "yearBuilt": { "type": "integer" },
+              "floors": { "type": "integer" },
+              "entranceCount": { "type": "integer" },
+              "totalAreaM": { "type": "number", "format": "double" },
+              "apartmentNum": { "type": "integer" },
+              "uninhabitedNum": { "type": "integer" },
+              "ownersCount": { "type": "integer" },
+              "landAreaHa": { "type": "number", "format": "double" },
+              "images": { "type": "array", "items": { "type": "string", "format": "uuid" } },
+              "owners": { "type": "array", "items": { "nullable": true, "$ref": "#/components/schemas/OwnerRecord" } }
+            }
+          },
+          "OwnerRecord": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "id": { "type": "integer", "format": "int64" },
+              "ownerPersons": { "type": "array", "items": { "$ref": "#/components/schemas/OwnerPerson" } },
+              "roomNumber": { "type": "string", "nullable": true },
+              "roomType": { "type": "integer" },
+              "entranceNum": { "type": "integer", "nullable": true },
+              "roomCount": { "type": "integer" },
+              "floor": { "type": "integer" },
+              "totalAreaM": { "type": "number", "format": "double" },
+              "livingAreaM": { "type": "number", "format": "double" },
+              "landAreaHa": { "type": "number", "format": "double" },
+              "cadastralNum": { "type": "string", "nullable": true },
+              "addressName": { "type": "string", "nullable": true },
+              "obligationFrom": {
+                "type": "integer",
+                "description": "1 — компенсация / приобретение нового жилья\n2 — временное жильё"
+              },
+              "independentValuationPrice": { "type": "number", "format": "double" },
+              "independentValuationDocName": { "type": "string", "nullable": true },
+              "independentValuationDocJcrId": { "type": "string", "format": "uuid", "nullable": true },
+              "compensationAmount": { "type": "number", "format": "double" },
+              "landValuationPrice": { "type": "number", "format": "double" },
+              "landValuationDocName": { "type": "string", "nullable": true },
+              "landValuationJcrId": { "type": "string", "format": "uuid", "nullable": true },
+              "tempHousingStatus": { "type": "integer" },
+              "tempHousingDocName": { "type": "string", "nullable": true },
+              "tempHousingDocJcrId": { "type": "string", "format": "uuid", "nullable": true },
+              "agreementStatusId": { "type": "integer" },
+              "agreementDocumentName": { "type": "string", "nullable": true },
+              "agreementDocumentJcrId": { "type": "string", "format": "uuid", "nullable": true },
+              "createdAt": { "type": "string", "example": "24.06.2026 03:49:46" },
+              "updatedAt": { "type": "string", "example": "24.06.2026 03:49:46" },
+              "documents": { "type": "array", "items": { "$ref": "#/components/schemas/DocumentRef" } }
+            }
+          },
+          "OwnerPerson": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "integer", "description": "1 — физическое лицо\n2 — юридическое лицо" },
+              "xin": { "type": "string", "description": "ИИН или БИН" },
+              "name": { "type": "string" }
+            }
+          },
+          "DocumentRef": {
+            "type": "object",
+            "properties": {
+              "docName": { "type": "string", "example": "Разрешение (1).pdf" },
+              "jcrId": { "type": "string", "format": "uuid" }
+            }
+          }
+        }
+      }
+    };
+
+    SwaggerUIBundle({
+      spec,
+      dom_id: '#swagger-ui',
+      presets: [SwaggerUIBundle.presets.apis, SwaggerUIBundle.SwaggerUIStandalonePreset],
+      layout: "BaseLayout",
+      deepLinking: true
+    });
+  </script>
+</body>
+</html>
