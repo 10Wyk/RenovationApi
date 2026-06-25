@@ -172,7 +172,7 @@
               "ownersCount": {
                 "type": "integer",
                 "example": 15,
-                "description": "Общее количество правообладателей по договору."
+                "description": "Общее количество cобственников"
               },
               "auth": {
                 "$ref": "#/components/schemas/AuthInfo"
@@ -242,7 +242,7 @@
               },
               "latitude": {
                 "type": "string",
-                "description": "Географическая широта объекта. ⚠️ Может содержать ведущий пробел — применять `.trim()` перед использованием."
+                "description": "Географическая широта объекта."
               },
               "longitude": {
                 "type": "string",
@@ -275,7 +275,7 @@
               },
               "ownersCount": {
                 "type": "integer",
-                "description": "Количество правообладателей по данному объекту."
+                "description": "Количество собственников по данному объекту."
               },
               "landAreaHa": {
                 "type": "number",
@@ -290,7 +290,7 @@
               "owners": {
                 "type": "array",
                 "items": { "nullable": true, "$ref": "#/components/schemas/OwnerRecord" },
-                "description": "Список записей о правообладателях (квартирах/помещениях) внутри объекта. Элементы массива могут быть `null`."
+                "description": "Список записей о собственниках (квартирах/помещениях) внутри объекта."
               }
             }
           },
@@ -303,7 +303,7 @@
               "id": {
                 "type": "integer",
                 "format": "int64",
-                "description": "Внутренний идентификатор записи о правообладателе."
+                "description": "Внутренний идентификатор записи о собственника."
               },
               "ownerPersons": {
                 "type": "array",
@@ -355,11 +355,11 @@
               "addressName": {
                 "type": "string",
                 "nullable": true,
-                "description": "Адрес помещения (может отличаться от адреса здания)."
+                "description": "Адрес помещения"
               },
               "obligationFrom": {
                 "type": "integer",
-                "description": "Форма исполнения обязательства перед правообладателем:\n\n1 — Компенсация или приобретение нового жилья\n\n2 — Предоставление временного жилья"
+                "description": "Форма исполнения обязательства перед правообладателем:\n\n1 — Предоставление денежной компенсации\n\n2 — Выделение доли"
               },
               "independentValuationPrice": {
                 "type": "number",
@@ -380,27 +380,27 @@
               "compensationAmount": {
                 "type": "number",
                 "format": "double",
-                "description": "Сумма денежной компенсации правообладателю, тенге."
+                "description": "Сумма денежной компенсации, тенге."
               },
               "landValuationPrice": {
                 "type": "number",
                 "format": "double",
-                "description": "Стоимость земельного участка по оценке, тенге."
+                "description": "Стоимость земельного участка по независимой оценке, тенге."
               },
               "landValuationDocName": {
                 "type": "string",
                 "nullable": true,
-                "description": "Название файла документа об оценке земельного участка."
+                "description": "Название файла документа по независимой оценке земельного участка."
               },
               "landValuationJcrId": {
                 "type": "string",
                 "format": "uuid",
                 "nullable": true,
-                "description": "UUID файла документа об оценке земли в хранилище JCR."
+                "description": "UUID файла документа по независимой оценке земли в хранилище JCR."
               },
               "tempHousingStatus": {
                 "type": "integer",
-                "description": "Статус предоставления временного жилья. `0` — не предоставлено. Остальные значения уточняются в справочнике системы."
+                "description": "Статус предоставления временного жилья:\n\n1 — Предоставлено\n\n2 — Не предоставлено"
               },
               "tempHousingDocName": {
                 "type": "string",
@@ -415,12 +415,12 @@
               },
               "agreementStatusId": {
                 "type": "integer",
-                "description": "Идентификатор статуса согласия правообладателя на условия реновации. Справочник уточняется на стороне системы."
+                "description": "Идентификатор статуса заключения соглашения в рамках реализации проекта реновации:\n\n1 — Зарегистрировано\n\n2 — Не зарегистрировано"
               },
               "agreementDocumentName": {
                 "type": "string",
                 "nullable": true,
-                "description": "Название файла документа, подтверждающего согласие правообладателя."
+                "description": "Название файла документа соглашения в рамках реализации проекта реновации."
               },
               "agreementDocumentJcrId": {
                 "type": "string",
@@ -441,7 +441,7 @@
               "documents": {
                 "type": "array",
                 "items": { "$ref": "#/components/schemas/DocumentRef" },
-                "description": "Список прикреплённых документов правообладателя (правоустанавливающие документы, акты и прочее)."
+                "description": "Документы, подтверждающие денежную компенсацию."
               }
             }
           },
