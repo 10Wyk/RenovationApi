@@ -47,39 +47,82 @@
                   "application/json": {
                     "schema": { "$ref": "#/components/schemas/RenovationContractResponse" },
                     "example": {
-                      "id": 46,
-                      "number": "05-0008",
-                      "date": "27.03.2026",
-                      "ownersCount": 15,
-                      "auth": {
-                        "bin": "191240020942",
-                        "name": "ТОО \"Esil Park\"",
-                        "email": "example@outlook.com",
-                        "phone": "+7(747)550-01-68"
-                      },
-                      "objects": [
-                        {
-                          "id": 58,
-                          "objectCategory": 1,
-                          "cadastralNum": "11-111-111-1111",
-                          "katoCode": "711510000",
-                          "addressName": "г.Астана, район Нұра, улица 1, д. 1",
-                          "latitude": " 71.455078",
-                          "longitude": "51.179343",
-                          "yearBuilt": 1921,
-                          "floors": 1,
-                          "entranceCount": 1,
-                          "totalAreaM": 1.0,
-                          "apartmentNum": 1,
-                          "uninhabitedNum": 1,
+                          "id": 59,
+                          "number": "05-0008",
+                          "date": "27.03.2026",
                           "ownersCount": 1,
-                          "landAreaHa": 0.0,
-                          "images": ["773cf9e7-d16f-473e-811b-c8175e94c957"],
-                          "owners": [null]
-                        }
-                      ]
+                          "auth": {
+                              "bin": "191240020942",
+                              "name": "ТОО \"Esil Park\"",
+                              "email": "ehehehehe@outlook.com",
+                              "phone": "+7(747)550-01-68"
+                          },
+                          "objects": [
+                              {
+                                  "id": 90,
+                                  "objectCategory": 1,
+                                  "cadastralNum": "24-432-243-2423",
+                                  "katoCode": "711510000",
+                                  "addressName": "г.Астана, район Нұра, улица 1, д. 2",
+                                  "latitude": " 71.455078",
+                                  "longitude": "51.124213",
+                                  "yearBuilt": 2026,
+                                  "floors": 14,
+                                  "entranceCount": 12,
+                                  "totalAreaM": 12.0,
+                                  "apartmentNum": 12,
+                                  "uninhabitedNum": 12,
+                                  "ownersCount": 1,
+                                  "landAreaHa": 0.0,
+                                  "images": [
+                                      "7b68bf89-6c3c-4a26-a77b-ddf966d4a157",
+                                      "1745285c-9385-4346-bd05-2dbd604cbb73",
+                                      "a85a38d6-1f40-4d08-bf08-f4fe5583b1e4",
+                                      "e60403e7-98cc-4ff7-b7f3-cf493660c7d2"
+                                  ],
+                                  "owners": [
+                                      {
+                                          "id": 214,
+                                          "ownerPersons": [
+                                              {
+                                                  "type": 1,
+                                                  "xin": "010927551059",
+                                                  "name": "Алтынбеков Бекзат Алтынбекұлы"
+                                              }
+                                          ],
+                                          "roomNumber": "4",
+                                          "roomType": 1,
+                                          "entranceNum": "1",
+                                          "roomCount": 3,
+                                          "floor": 2,
+                                          "totalAreaM": 5.0,
+                                          "livingAreaM": 6.0,
+                                          "landAreaHa": 0.0,
+                                          "cadastralNum": "45-234-543-5345",
+                                          "addressName": "г.Астана, район Алматы, улица 1, д. 2",
+                                          "obligationFrom": 1,
+                                          "independentValuationPrice": 0.0,
+                                          "independentValuationDocName": null,
+                                          "independentValuationDocJcrId": null,
+                                          "compensationAmount": 0.0,
+                                          "landValuationPrice": 0.0,
+                                          "landValuationDocName": null,
+                                          "landValuationJcrId": null,
+                                          "tempHousingStatus": 0,
+                                          "tempHousingDocName": null,
+                                          "tempHousingDocJcrId": null,
+                                          "agreementStatusId": 2,
+                                          "agreementDocumentName": null,
+                                          "agreementDocumentJcrId": null,
+                                          "createdAt": "25.06.2026 10:12:07",
+                                          "updatedAt": "25.06.2026 10:12:07",
+                                          "documents": []
+                                      }
+                                  ]
+                              }
+                          ]
+                      }
                     }
-                  }
                 }
               },
               "401": { "description": "Не авторизован — отсутствует или неверный заголовок Authorization" },
